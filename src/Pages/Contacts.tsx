@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
-import ContactForm from '../Components/ContactForm';
+import ContactForm from '../Components/ContactForm'; 
 import ContactList from '../Components/ContactList';
 
+interface Contact {
+  id: string;
+  firstName: string;
+  lastName: string;
+  status: string;
+}
+
+/**
+ * Contacts component - displays and manages contacts, allowing users to create and edit contacts.
+ * @returns {JSX.Element}
+ */
 const Contacts: React.FC = () => {
+  // State to manage form visibility and edit data
   const [showForm, setShowForm] = useState(false);
-  const [editData, setEditData] = useState<{ id: string, firstName: string, lastName: string, status: string } | undefined>(undefined);
+  const [editData, setEditData] = useState<Contact | undefined>(undefined);
+
+  // Retrieve contacts from the Redux store
   const contacts = useSelector((state: RootState) => state.contacts.contacts);
 
-  const handleFormSubmit = () => {
+  // Handle form submission
+  const handleFormSubmit = (): void => {
     setShowForm(false);
     setEditData(undefined);
   };
 
-  const handleEditClick = (contact: { id: string, firstName: string, lastName: string, status: string }) => {
+  // Handle edit button click
+  const handleEditClick = (contact: Contact): void => {
     setEditData(contact);
     setShowForm(true);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 rounded-md p-4 overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 overflow-hidden rounded-md">
       {!showForm ? (
         <div className="w-full max-w-md text-center bg-white shadow-md rounded p-4">
           <button

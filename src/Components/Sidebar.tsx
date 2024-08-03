@@ -2,17 +2,24 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as ContactsIcon } from '../assets/icons/contact.svg';
 import { ReactComponent as ChartsIcon } from '../assets/icons/charts.svg';
-import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg'; // Placeholder for arrow icon SVG
+import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
 
+// Define the props for the Sidebar component
 interface SidebarProps {
   isCollapsed: boolean;
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/**
+ * Sidebar component - displays a collapsible sidebar menu with navigation links.
+ * @param {SidebarProps} props - The props for the component.
+ * @returns {JSX.Element}
+ */
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
   const location = useLocation();
 
-  const toggleSidebar = () => {
+  // Toggle the collapsed state of the sidebar
+  const toggleSidebar = (): void => {
     setIsCollapsed(!isCollapsed);
   };
 
@@ -25,14 +32,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           </button>
         </div>
         <div style={{ marginTop: "28px" }}>
-        <Link to="/" className={`flex items-center p-2 rounded hover:bg-gray-200 ${location.pathname === '/' ? 'bg-gray-200' : ''} ${isCollapsed ? 'justify-center' : ''}`}>
-          <ContactsIcon className="w-6 h-6" />
-          <span className={`ml-3 ${isCollapsed ? 'hidden' : ''}`}>Contacts</span>
-        </Link>
-        <Link to="/charts-and-maps" className={`flex items-center p-2 rounded hover:bg-gray-200 ${location.pathname === '/charts-and-maps' ? 'bg-gray-200' : ''} ${isCollapsed ? 'justify-center' : ''}`}>
-          <ChartsIcon className="w-6 h-6" />
-          <span className={`ml-3 ${isCollapsed ? 'hidden' : ''}`}>Charts and Maps</span>
-        </Link>
+          <Link
+            to="/"
+            className={`flex items-center p-2 rounded hover:bg-gray-200 ${location.pathname === '/' ? 'bg-gray-200 font-semibold' : ''} ${isCollapsed ? 'justify-center' : ''}`}
+          >
+            <ContactsIcon className="w-6 h-6" />
+            <span className={`ml-3 ${isCollapsed ? 'hidden' : ''}`}>Contacts</span>
+          </Link>
+          <Link
+            to="/charts-and-maps"
+            className={`flex items-center p-2 rounded hover:bg-gray-200 ${location.pathname === '/charts-and-maps' ? 'bg-gray-200 font-semibold' : ''} ${isCollapsed ? 'justify-center' : ''}`}
+          >
+            <ChartsIcon className="w-6 h-6" />
+            <span className={`ml-3 ${isCollapsed ? 'hidden' : ''}`}>Charts and Maps</span>
+          </Link>
         </div>
       </div>
     </div>

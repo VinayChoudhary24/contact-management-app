@@ -7,12 +7,16 @@ import Sidebar from './Components/Sidebar';
 import Contacts from './Pages/Contacts';
 import ChartsAndMaps from './Pages/ChartsAndMaps';
 import ContactDetails from './Components/ContactDetails';
-import Loader from './Components/loader';  // Import Loader
-import FullPageLoader from './Components/FullPageLoader'; // Import FullPageLoader
+import Loader from './Components/loader';
+import FullPageLoader from './Components/FullPageLoader';
 
-// Create a client
+// Create a QueryClient for React Query
 const queryClient = new QueryClient();
 
+/**
+ * App component - main entry point of the application, sets up providers and routing.
+ * @returns {JSX.Element}
+ */
 const App: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -28,6 +32,12 @@ const App: React.FC = () => {
   );
 };
 
+/**
+ * MainContent component - handles routing and conditional rendering of loaders.
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isCollapsed - State to manage sidebar collapse/expand.
+ * @returns {JSX.Element}
+ */
 const MainContent: React.FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
   const location = useLocation();
 

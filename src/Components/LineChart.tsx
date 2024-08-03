@@ -19,6 +19,7 @@ import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
 import { showLoader, hideLoader } from '../Slices/loaderSlice';
 
+// Register necessary Chart.js components
 ChartJS.register(
   CategoryScale,
   TimeScale,
@@ -31,6 +32,7 @@ ChartJS.register(
   Filler
 );
 
+// Define Chart.js options with responsive styling
 const options: ChartOptions<'line'> = {
   responsive: true,
   maintainAspectRatio: false,
@@ -69,40 +71,49 @@ const options: ChartOptions<'line'> = {
   },
 };
 
+// Function to fetch graph data from the API
 const fetchGraphData = async () => {
   const { data } = await axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all');
   return data;
 };
 
+/**
+ * LineChart component - displays a line chart with COVID-19 historical data.
+ * @returns {JSX.Element | null}
+ */
 const LineChart: React.FC = () => {
   const dispatch = useDispatch();
   
-  // Dispatch showLoader immediately when component mounts
+  // Show loader when component mounts
   useEffect(() => {
     dispatch(showLoader());
   }, [dispatch]);
 
+  // Fetch graph data and manage loading state
   const { data, error, isLoading } = useQuery('graphData', fetchGraphData, {
     onSettled: () => dispatch(hideLoader()),
     onError: () => dispatch(hideLoader()),
   });
 
+  // Show loader while data is being loaded
   useEffect(() => {
     if (isLoading) {
       dispatch(showLoader());
     }
   }, [isLoading, dispatch]);
 
+  // Render nothing if data is still loading
   if (isLoading || !data) {
     return null;
   }
 
+  // Show error message if data failed to load
   if (error) {
     return <div>Error loading data</div>;
   }
 
+  // Map API data to chart labels and datasets
   const labels = Object.keys(data.cases).map((date) => new Date(date));
-
   const chartData = {
     labels,
     datasets: [
@@ -131,7 +142,7 @@ const LineChart: React.FC = () => {
   };
 
   return (
-    <div className="mb-4" style={{ height: '400px' }}>
+    <div className="mb-4 w-full max-w-full h-96">
       <Line data={chartData} options={options} />
     </div>
   );

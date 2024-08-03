@@ -12,11 +12,12 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
+// Define the default icon for Leaflet markers
 const DefaultIcon = L.icon({
   iconRetinaUrl: markerIcon2x,
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
-  iconSize: [25, 41],
+  iconSize: [17, 33],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
@@ -24,34 +25,43 @@ const DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
+// Function to fetch COVID-19 data for different countries
 const fetchCountriesData = async () => {
   const { data } = await axios.get('https://disease.sh/v3/covid-19/countries');
   return data;
 };
 
+/**
+ * WorldMap component - displays a map with COVID-19 data for different countries.
+ * @returns {JSX.Element | null}
+ */
 const WorldMap: React.FC = () => {
   const dispatch = useDispatch();
 
-  // Dispatch showLoader immediately when component mounts
+  // Show loader when component mounts
   useEffect(() => {
     dispatch(showLoader());
   }, [dispatch]);
 
+  // Fetch country data and manage loading state
   const { data, error, isLoading } = useQuery('countriesData', fetchCountriesData, {
     onSettled: () => dispatch(hideLoader()),
     onError: () => dispatch(hideLoader()),
   });
 
+  // Show loader while data is being loaded
   useEffect(() => {
     if (isLoading) {
       dispatch(showLoader());
     }
   }, [isLoading, dispatch]);
 
+  // Render nothing if data is still loading
   if (isLoading || !data) {
-    return null; // Avoid showing the component before the data is available
+    return null;
   }
 
+  // Show error message if data failed to load
   if (error) {
     return <div>Error loading data</div>;
   }

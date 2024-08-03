@@ -4,18 +4,26 @@ import { useDispatch } from 'react-redux';
 import { addContact, editContact } from '../Slices/ContactSlices';
 import { nanoid } from 'nanoid';
 
+// Define the props for the ContactForm component
 interface ContactFormProps {
   onSubmit: () => void;
   initialData?: { id: string; firstName: string; lastName: string; status: string };
 }
 
+// Define the form inputs type
 interface FormInputs {
   firstName: string;
   lastName: string;
   status: string;
 }
 
+/**
+ * ContactForm component - displays and handles the form for adding/editing contacts.
+ * @param {ContactFormProps} props - The props for the component.
+ * @returns {JSX.Element}
+ */
 const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
+  // Use react-hook-form for form state management and validation
   const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>({
     defaultValues: {
       firstName: initialData?.firstName || '',
@@ -23,8 +31,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
       status: initialData?.status || 'Active',
     },
   });
+
   const dispatch = useDispatch();
 
+  // Handle form submission
   const onSubmitHandler: SubmitHandler<FormInputs> = (data) => {
     const { firstName, lastName, status } = data;
     if (initialData) {
@@ -36,7 +46,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitHandler)} className="mb-4 p-4 border rounded bg-white shadow-md w-full max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmitHandler)}
+      className="mb-4 p-4 border rounded bg-white shadow-md w-full max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
+    >
       <div className="mb-4">
         <label className="block text-gray-700">First Name</label>
         <input
@@ -45,6 +58,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
         />
         {errors.firstName && <span className="text-red-500 text-sm">{errors.firstName.message}</span>}
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700">Last Name</label>
         <input
@@ -53,6 +67,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
         />
         {errors.lastName && <span className="text-red-500 text-sm">{errors.lastName.message}</span>}
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700">Status</label>
         <select {...register('status')} className="border p-2 w-full">
@@ -60,6 +75,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
           <option value="Inactive">Inactive</option>
         </select>
       </div>
+
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
         {initialData ? 'Update Contact' : 'Add Contact'}
       </button>
