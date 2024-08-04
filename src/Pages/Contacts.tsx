@@ -39,16 +39,19 @@ const Contacts: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 overflow-hidden rounded-md">
       {!showForm ? (
         <div className="w-full max-w-md text-center bg-white shadow-md rounded p-4">
-          <button
-            onClick={() => setShowForm(true)}
-            className="bg-blue-500 text-white px-4 py-2 mb-4 rounded"
-          >
-            Create Contact
-          </button>
+          <button 
+              style={contacts.length ? { marginLeft: "15px" } : {}}
+              onClick={() => setShowForm(true)}
+              className="bg-blue-500 text-white px-4 py-2 mb-4 rounded"
+            >
+              Create Contact
+            </button>
           {contacts.length === 0 ? (
             <p>No Contacts Found</p>
           ) : (
-            <ContactList onEditClick={handleEditClick} />
+            <div className="w-full flex justify-center">
+              <ContactList onEditClick={handleEditClick} />
+            </div>
           )}
         </div>
       ) : (

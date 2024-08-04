@@ -48,35 +48,39 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, initialData }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="mb-4 p-4 border rounded bg-white shadow-md w-full max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
+      className="mb-4 p-4 border rounded bg-white shadow-md w-full max-w-md 
+                 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto"
     >
       <div className="mb-4">
-        <label className="block text-gray-700">First Name</label>
+        <label className="block text-gray-700 text-sm md:text-base lg:text-lg">First Name</label>
         <input
           {...register('firstName', { required: 'First name is required' })}
           className={`border p-2 w-full ${errors.firstName ? 'border-red-500' : ''}`}
         />
-        {errors.firstName && <span className="text-red-500 text-sm">{errors.firstName.message}</span>}
+        {errors.firstName && <span className="text-red-500 text-xs md:text-sm lg:text-base">{errors.firstName.message}</span>}
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Last Name</label>
+        <label className="block text-gray-700 text-sm md:text-base lg:text-lg">Last Name</label>
         <input
           {...register('lastName', { required: 'Last name is required' })}
           className={`border p-2 w-full ${errors.lastName ? 'border-red-500' : ''}`}
         />
-        {errors.lastName && <span className="text-red-500 text-sm">{errors.lastName.message}</span>}
+        {errors.lastName && <span className="text-red-500 text-xs md:text-sm lg:text-base">{errors.lastName.message}</span>}
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Status</label>
+        <label className="block text-gray-700 text-sm md:text-base lg:text-lg">Status</label>
         <select {...register('status')} className="border p-2 w-full">
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
         </select>
       </div>
 
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+      <button
+        type="submit"
+        className="bg-blue-500 text-white text-sm md:text-base lg:text-lg px-4 py-2 rounded"
+      >
         {initialData ? 'Update Contact' : 'Add Contact'}
       </button>
     </form>

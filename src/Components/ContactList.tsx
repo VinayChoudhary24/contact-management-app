@@ -23,27 +23,29 @@ const ContactList: React.FC<ContactListProps> = ({ onEditClick }) => {
 
   return (
     <div className="flex flex-col items-center w-full p-4 sm:p-2 md:p-6 lg:p-8">
-      <h2 className="text-xl mb-4">Contacts</h2>
-      <ul className="list-disc pl-5 w-full space-y-2">
+      <h2 style={{ marginLeft: "15px" }} className="text-xl sm:text-lg md:text-xl lg:text-2xl mb-4 text-center">Contacts</h2>
+      <ul className="list-disc pl-5 w-full space-y-2 sm:space-y-1 md:space-y-2 lg:space-y-3">
         {contacts.map(contact => (
           <li
             key={contact.id}
-            className="p-4 shadow-md rounded flex justify-between items-center bg-gray-100"
+            className="p-4 sm:p-2 sm:mb-3 md:p-3 lg:p-4 shadow-md rounded flex flex-col lg:flex-row justify-between items-center bg-gray-100 text-center sm:text-left lg:text-left"
           >
-            <div>
-              <span className="block font-semibold">{contact.firstName} {contact.lastName}</span>
-              <span className="text-gray-500">{contact.status}</span>
+            <div className="flex-grow">
+              <span className="block font-semibold text-base sm:text-sm md:text-base lg:text-lg">{contact.firstName} {contact.lastName}</span>
+              <span className="text-gray-500 text-sm sm:text-xs md:text-sm lg:text-base sm:flex sm:justify-center sm:items-center md:flex md:justify-center md:items-center lg:block">
+                {contact.status}
+              </span>
             </div>
-            <div className="flex gap-2 relative">
+            <div className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-2 md:mt-2 lg:mt-0">
               <button
                 onClick={() => onEditClick(contact)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded relative flex justify-center items-center hover:bg-yellow-700"
+                className="bg-yellow-500 text-white text-sm sm:text-xs md:text-sm lg:text-base px-3 py-2 sm:px-2 sm:py-1 md:px-3 md:py-2 lg:px-4 lg:py-2 rounded flex justify-center items-center hover:bg-yellow-700"
               >
                 Edit
               </button>
               <button
                 onClick={() => dispatch(deleteContact(contact.id))}
-                className="bg-red-500 text-white px-4 py-2 rounded relative flex justify-center items-center hover:bg-red-700"
+                className="bg-red-500 text-white text-sm sm:text-xs md:text-sm lg:text-base px-3 py-2 sm:px-2 sm:py-1 md:px-3 md:py-2 lg:px-4 lg:py-2 rounded flex justify-center items-center hover:bg-red-700"
               >
                 Delete
               </button>

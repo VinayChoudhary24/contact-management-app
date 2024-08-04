@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as ContactsIcon } from '../assets/icons/contact.svg';
 import { ReactComponent as ChartsIcon } from '../assets/icons/charts.svg';
@@ -17,6 +17,26 @@ interface SidebarProps {
  */
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
   const location = useLocation();
+
+  // Set isCollapsed based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsCollapsed(true);
+      } else {
+        setIsCollapsed(false);
+      }
+    };
+    
+    // Initialize collapse state
+    handleResize();
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Clean up event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, [setIsCollapsed]);
 
   // Toggle the collapsed state of the sidebar
   const toggleSidebar = (): void => {

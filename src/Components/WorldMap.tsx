@@ -67,7 +67,7 @@ const WorldMap: React.FC = () => {
   }
 
   return (
-    <div className="relative w-full h-96 md:h-[500px] lg:h-[600px]">
+    <div className="relative w-full h-64 sm:h-72 md:h-96 lg:h-[600px]">
       <MapContainer center={[0, 0]} zoom={2} className="h-full w-full">
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {data.map((country: any, index: number) => {
@@ -76,10 +76,10 @@ const WorldMap: React.FC = () => {
             <Marker key={uniqueKey} position={[country.countryInfo.lat, country.countryInfo.long]}>
               <Popup>
                 <div>
-                  <h3>{country.country}</h3>
-                  <p>Cases: {country.cases}</p>
-                  <p>Recovered: {country.recovered}</p>
-                  <p>Deaths: {country.deaths}</p>
+                  <h3 className="text-sm md:text-base lg:text-lg font-medium">{country.country}</h3>
+                  <p className="text-xs md:text-sm lg:text-base">Cases: {country.cases}</p>
+                  <p className="text-xs md:text-sm lg:text-base">Recovered: {country.recovered}</p>
+                  <p className="text-xs md:text-sm lg:text-base">Deaths: {country.deaths}</p>
                 </div>
               </Popup>
             </Marker>

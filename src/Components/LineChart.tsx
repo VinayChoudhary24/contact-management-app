@@ -55,7 +55,12 @@ const options: ChartOptions<'line'> = {
         display: true,
         text: 'Date',
         font: {
-          size: 14,
+          size: window.innerWidth < 768 ? 10 : 14,  // smaller font size for sm and md screens
+        },
+      },
+      ticks: {
+        font: {
+          size: window.innerWidth < 768 ? 8 : 12,  // smaller tick font size for sm and md screens
         },
       },
     },
@@ -64,7 +69,12 @@ const options: ChartOptions<'line'> = {
         display: true,
         text: 'Count',
         font: {
-          size: 14,
+          size: window.innerWidth < 768 ? 10 : 14,  // smaller font size for sm and md screens
+        },
+      },
+      ticks: {
+        font: {
+          size: window.innerWidth < 768 ? 8 : 12,  // smaller tick font size for sm and md screens
         },
       },
     },
@@ -142,7 +152,7 @@ const LineChart: React.FC = () => {
   };
 
   return (
-    <div className="mb-4 w-full max-w-full h-96">
+    <div className="mb-4 w-full max-w-full h-96 sm:h-64 md:h-72 lg:h-96">
       <Line data={chartData} options={options} />
     </div>
   );
